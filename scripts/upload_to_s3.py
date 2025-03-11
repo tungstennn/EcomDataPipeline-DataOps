@@ -2,7 +2,7 @@ import boto3
 import os
 
 # 🔹 AWS S3 Configuration
-S3_BUCKET = "raw-sales-bucket"
+S3_BUCKET = "ecom-sales-bucket"
 S3_FOLDER = "olist_data/"  # Folder in S3 where files will be stored
 LOCAL_FOLDER = "raw_data/"  # Folder where the dataset is stored locally
 
