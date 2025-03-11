@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "raw_data" {
-  bucket = "dataops-raw-sales-bucket" # Change to a unique name
+  bucket = "raw-sales-bucket"
 
   #   lifecycle {
   #     prevent_destroy = true
