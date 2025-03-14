@@ -1,4 +1,4 @@
-# End-to-End DataOps Batch ETL Project
+# End-to-End DataOps Batch ETL Project🚀
 
 ## 1. Project Overview
 This project builds an **ETL pipeline** that transforms raw sales transaction data from **AWS S3** into an **Amazon Redshift** data warehouse for **business intelligence (BI) and reporting**. The pipeline follows a **star schema model** and is orchestrated using **Apache Airflow (local setup)**.
