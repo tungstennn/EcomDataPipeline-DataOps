@@ -23,7 +23,7 @@ E-commerce businesses store transactional data in **AWS S3**, but it remains **s
 
 ## 4. Tech Stack
 - **Infrastructure as Code**: Terraform
-- **Cloud Services**: AWS S3 (Data lake for), Redshift (Data Warehouse), IAM
+- **Cloud Services**: AWS S3 (Data lake), Redshift (Data Warehouse), IAM
 - **ETL Framework**: Python (Pandas/PySpark)
 - **Orchestration**: Apache Airflow (Local Setup)
 - **Storage Format**: Parquet
