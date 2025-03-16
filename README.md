@@ -28,6 +28,6 @@ E-commerce businesses store transactional data in **AWS S3**, but it remains **s
 
 ---
 ### 📌 **Status:** In Progress ⏳  
-A detailed breakdown of the ETL process and schema will be added upon completion. Stay tuned! 🚀
+A detailed breakdown of the ETL process and schema will be added upon completion
 
 ---
