@@ -3,7 +3,7 @@
 ## 1. Project Overview
 This project builds an **ETL pipeline** that transforms raw sales transaction data from **AWS S3** into an **Amazon Redshift** data warehouse for **business intelligence (BI) and reporting**. The pipeline follows a **star schema model** and is orchestrated using **Apache Airflow (local setup)**.
 
-This project leverages S3 as a data lake for structured historical data from an OLTP database, bypassing the ingestion layer. The highly normalized OLTP data lacks business logic, making analysis difficult. To address this, I apply dimensional star schema modeling to enhance clarity and align with data warehousing standards. The ultimate goal is to create a Single Customer View (SCV), providing a unified dataset that improves insights, decision-making, and customer interactions across the data ecosystem.
+This project leverages S3 as a data lake for structured historical data from an OLTP database, skipping the ingestion layer. The highly normalized OLTP data lacks business logic, making analysis difficult. To address this, I apply dimensional star schema modeling to enhance clarity and align with data warehousing standards. The ultimate goal is to create a Single Customer View (SCV), providing a unified dataset that improves insights, decision-making, and customer interactions across the data ecosystem.
 
 ## 2. Problem Statement
 E-commerce businesses store transactional data in **AWS S3**, but it remains **semi-structured and inefficient** for analysis. This project automates the process of extracting, transforming, and loading **new batch data** daily, enabling efficient sales, customer, and product analytics in **Redshift**.
