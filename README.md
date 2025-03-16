@@ -17,7 +17,7 @@ E-commerce businesses store transactional data in **AWS S3**, but it remains **s
 
 ### **ETL Process**
 **1. Extract**: Copy new batch data from **S3** (Parquet format).  
-**2. Transform**: Clean and structure data into **fact and dimension tables** using star schema approach.  
+**2. Transform**: Clean and structure data into **fact and dimension tables** using star schema approach and apply business logic.  
 **3. Load**: Store transformed data in **Amazon Redshift** for analytical purposes.  
 **4. Orchestrate**: Automate ETL execution using **Airflow DAGs (local setup)**.
 
