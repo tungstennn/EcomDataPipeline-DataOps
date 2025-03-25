@@ -10,16 +10,16 @@ E-commerce businesses store transactional data in **AWS S3**, but it remains **s
 
 ## 3. Project Scope
 ### **Infrastructure (Terraform-Managed AWS Resources)**
-✅ **Amazon S3** – Historical structued transanctional data (Data Lake).  
-✅ **Amazon Redshift (Serverless)** – Data warehouse for analytics.  
-✅ **IAM Roles & Policies** – Secure S3-Redshift access.  
-✅ **Apache Airflow (Local Setup)** – Orchestrates the ETL workflow.  
+✅ **Amazon S3** – Historical structued transanctional data (Data Lake)
+✅ **Amazon Redshift (Serverless)** – Data warehouse for analytics
+✅ **IAM Roles & Policies** – Secure S3-Redshift access
+✅ **Apache Airflow (Local Setup)** – Orchestrates the ETL workflow
 
 ### **ETL Process**
-**1. Extract**: Copy new batch data from **S3** (Parquet format).  
-**2. Transform**: Clean and structure data into **fact and dimension tables** using star schema approach and apply business logic.  
-**3. Load**: Store transformed data in **Amazon Redshift** for analytical purposes.  
-**4. Orchestrate**: Automate ETL execution using **Airflow DAGs (local setup)**.
+**1. Extract**: Copy new batch data from **S3** (Parquet format)
+**2. Transform**: Clean and structure data into **fact and dimension tables** using star schema approach and apply business logic
+**3. Load**: Store transformed data in **Amazon Redshift** for analytical purposes
+**4. Orchestrate**: Automate ETL execution using **Airflow DAGs (local setup)**
 
 ## 4. Tech Stack
 - **Infrastructure as Code**: Terraform
