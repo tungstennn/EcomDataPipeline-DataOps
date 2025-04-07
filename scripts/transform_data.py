@@ -1,4 +1,4 @@
-from extract_from_s3 import extract_all_data
+from extract_from_s3 import extract_all_data # Import the function to extract data from S3, this is called at the end of the script
 import pandas as pd
 import numpy as np
 import os
@@ -6,33 +6,34 @@ import os
 
 
 def transform_dim_customers(customers_df, geo_df):
-    geo_unique = geo_df[['geolocation_zip_code_prefix', 'geolocation_lat', 'geolocation_lng']].drop_duplicates('geolocation_zip_code_prefix')
+    geo_unique = geo_df[['geolocation_zip_code_prefix', 'geolocation_lat', 'geolocation_lng']].drop_duplicates('geolocation_zip_code_prefix') # Extract unique geolocation data
     
-    dim_customers = customers_df.merge(
+    dim_customers = customers_df.merge(     # dim_customers is created by merging customers_df with geo_unique on the zip_code_prefix column 
         geo_unique, how='left',
         left_on='customer_zip_code_prefix',
         right_on='geolocation_zip_code_prefix'
         ).drop(columns='geolocation_zip_code_prefix').dropna()
     
-    return dim_customers[['customer_id', 'customer_zip_code_prefix', 'customer_city', 'customer_state', 'geolocation_lat', 'geolocation_lng']]
+    return dim_customers[['customer_id', 'customer_zip_code_prefix', 'customer_city', 'customer_state', 'geolocation_lat', 'geolocation_lng']] # Return the relevant columns
 
 
 
 def transform_dim_sellers(sellers_df, geo_df):
-    geo_unique = geo_df[['geolocation_zip_code_prefix', 'geolocation_lat', 'geolocation_lng']].drop_duplicates('geolocation_zip_code_prefix')
+    geo_unique = geo_df[['geolocation_zip_code_prefix', 'geolocation_lat', 'geolocation_lng']].drop_duplicates('geolocation_zip_code_prefix') # Extract unique geolocation data
     
-    dim_sellers = sellers_df.merge(
+    dim_sellers = sellers_df.merge(     # dim_sellers is created by merging sellers_df with geo_unique on the zip_code_prefix column    
         geo_unique, how= 'left',
         left_on='seller_zip_code_prefix',
         right_on='geolocation_zip_code_prefix'
         ).drop(columns='geolocation_zip_code_prefix').dropna()
     
-    return dim_sellers[['seller_id', 'seller_zip_code_prefix', 'seller_city', 'seller_state', 'geolocation_lat', 'geolocation_lng']]
+    return dim_sellers[['seller_id', 'seller_zip_code_prefix', 'seller_city', 'seller_state', 'geolocation_lat', 'geolocation_lng']] # Return the relevant columns
     
 
 
-def transform_dim_products(products_df,cat_df):
-    dim_products = products_df.merge(
+def transform_dim_products(products_df,cat_df): 
+    
+    dim_products = products_df.merge(                                   # dim_products is created by merging products_df with cat_df on the product_category_name column
         cat_df, how='left',
         left_on='product_category_name',
         right_on='product_category_name'
@@ -45,12 +46,13 @@ def transform_dim_products(products_df,cat_df):
            'product_height_cm',
            'product_width_cm']).dropna()
     
-    return dim_products[['product_id', 'product_category_name_english']]
+    return dim_products[['product_id', 'product_category_name_english']] # Return the relevant columns
 
 
 
 def transform_dim_items(items_df, reviews_df):
-    dim_items = items_df.merge(
+    
+    dim_items = items_df.merge(                   # dim_items is created by merging items_df with reviews_df on the order_id column
         reviews_df, how='left',
         left_on = 'order_id',
         right_on = 'order_id'
@@ -59,38 +61,43 @@ def transform_dim_items(items_df, reviews_df):
     return dim_items[['order_id', 'product_id', 
                       'seller_id', 'price', 
                       'freight_value', 'review_id', 
-                      'review_score']]
+                      'review_score']]             # Return the relevant columns
 
 
     
 def transform_dim_payments(payments_df):
-    payments_df = payments_df.drop(columns=['payment_sequential']).dropna()
     
-    return payments_df[['order_id', 'payment_type', 'payment_installments', 'payment_value']]
+    payments_df = payments_df.drop(columns=['payment_sequential']).dropna()                     # Drop the payment_sequential column and any rows with NaN values
+    
+    return payments_df[['order_id', 'payment_type', 'payment_installments', 'payment_value']]   # Return the relevant columns
 
 
 
 def transform_orders(orders_df):
-    orders_df['order_purchase_timestamp'] = pd.to_datetime(orders_df['order_purchase_timestamp'])
-    orders_df['order_delivered_customer_timestamp'] = pd.to_datetime(orders_df['order_delivered_customer_date'])
+    
+    orders_df['order_purchase_timestamp'] = pd.to_datetime(orders_df['order_purchase_timestamp'])                   # Convert the order_purchase_timestamp column to datetime format
+    orders_df['order_delivered_customer_timestamp'] = pd.to_datetime(orders_df['order_delivered_customer_date'])    # Convert the order_delivered_customer_date column to datetime format
     
     orders_df = orders_df.drop(columns=[
         'order_delivered_carrier_date', 
         'order_estimated_delivery_date',
         'order_delivered_customer_date'])
     
-    return orders_df[['order_id', 'customer_id', 'order_status', 'order_purchase_timestamp','order_delivered_customer_timestamp']]
+    return orders_df[['order_id', 'customer_id', 'order_status', 'order_purchase_timestamp','order_delivered_customer_timestamp']]  # Return the relevant columns
     
     
     
 def transform_fact_orders(orders_df, dim_customers, dim_sellers, dim_products, dim_items, dim_payments):
+    
+    # Cleaning the data by dropping rows with NaN values in the relevant columns
     orders_clean = orders_df[['order_id', 'customer_id', 'order_purchase_timestamp']].dropna()
     clean_customers = dim_customers[['customer_id', 'customer_city']].dropna()
     clean_sellers = dim_sellers[['seller_id', 'seller_city']].dropna()
     clean_products = dim_products[['product_id', 'product_category_name_english']].dropna()
     clean_items = dim_items[['order_id', 'product_id', 'seller_id', 'price', 'freight_value']].dropna()
-    clean_payments = dim_payments[['order_id', 'payment_type', 'payment_installments', 'payment_value']].dropna()
+    clean_payments = dim_payments[['order_id', 'payment_type', 'payment_installments', 'payment_value']].dropna()   
 
+    # Merging the cleaned dataframes to create the fact_orders dataframe
     fact_orders = orders_clean \
         .merge(clean_customers, on='customer_id', how='inner') \
         .merge(clean_items, on='order_id', how='left') \
@@ -99,7 +106,7 @@ def transform_fact_orders(orders_df, dim_customers, dim_sellers, dim_products, d
         .merge(clean_payments, on='order_id', how='left') \
         .dropna()
 
-    return fact_orders
+    return fact_orders # Return the final fact_orders dataframe
 
 
 
