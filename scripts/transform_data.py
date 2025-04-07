@@ -89,18 +89,25 @@ def transform_dim_payments(payments_df):
 def transform_orders(orders_df):
     print("Transforming orders...")
     
-    orders_df['order_purchase_timestamp'] = pd.to_datetime(orders_df['order_purchase_timestamp'])                   # Convert the order_purchase_timestamp column to datetime format
-    orders_df['order_delivered_customer_timestamp'] = pd.to_datetime(orders_df['order_delivered_customer_date'])    # Convert the order_delivered_customer_date column to datetime format
+    # Convert timestamps to datetime
+    orders_df['order_purchase_timestamp'] = pd.to_datetime(orders_df['order_purchase_timestamp'])
+    orders_df['order_delivered_customer_timestamp'] = pd.to_datetime(orders_df['order_delivered_customer_date'])
     
+    # Format to match Redshift requirements
+    orders_df['order_purchase_timestamp'] = orders_df['order_purchase_timestamp'].dt.strftime("%Y-%m-%d %H:%M:%S")
+    orders_df['order_delivered_customer_timestamp'] = orders_df['order_delivered_customer_timestamp'].dt.strftime("%Y-%m-%d %H:%M:%S")
+    
+    # Drop unnecessary columns
     orders_df = orders_df.drop(columns=[
         'order_delivered_carrier_date', 
         'order_estimated_delivery_date',
-        'order_delivered_customer_date'])
+        'order_delivered_customer_date'
+    ])
     
     print("Orders transformed successfully!")
     
-    return orders_df[['order_id', 'customer_id', 'order_status', 'order_purchase_timestamp','order_delivered_customer_timestamp']]  # Return the relevant columns
-    
+    return orders_df[['order_id', 'customer_id', 'order_status', 'order_purchase_timestamp', 'order_delivered_customer_timestamp']]
+
     
     
 def transform_fact_orders(orders_df, dim_customers, dim_sellers, dim_products, dim_items, dim_payments):
@@ -144,8 +151,9 @@ if __name__ == "__main__":
 
     
     # print("Transformed DataFrames:")
-    # print("Fact Orders:")
-    # print(fact_orders.head())
+    print("Fact Orders:")
+    print(fact_orders.head())
+    print("📊 Columns in fact_orders:", fact_orders.columns.tolist())
     # print("Dim customers:")
     # print(dim_customers.head())
     # print("Dim sellers:")
