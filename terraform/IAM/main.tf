@@ -4,9 +4,9 @@ resource "aws_iam_role" "redshift_s3_role" {
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Effect = "Allow"
+      Effect    = "Allow"
       Principal = { Service = "redshift.amazonaws.com" }
-      Action = "sts:AssumeRole"
+      Action    = "sts:AssumeRole"
     }]
   })
 }
@@ -24,8 +24,8 @@ resource "aws_iam_policy" "s3_access_policy" {
         "s3:PutObject"
       ]
       Resource = [
-        "arn:aws:s3:::dataops-raw-sales-bucket",
-        "arn:aws:s3:::dataops-raw-sales-bucket/*"
+        "arn:aws:s3:::ecom-sales-bucket",
+        "arn:aws:s3:::ecom-sales-bucket/*"
       ]
     }]
   })
