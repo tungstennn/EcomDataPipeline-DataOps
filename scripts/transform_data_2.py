@@ -1,4 +1,4 @@
-from extract_from_s3 import extract_all_data # Import the function to extract data from S3, this is called at the end of the script
+from scripts.extract_from_s3_1 import extract_all_data # Import the function to extract data from S3, this is called at the end of the script
 import pandas as pd
 import numpy as np
 

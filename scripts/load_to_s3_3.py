@@ -1,4 +1,4 @@
-from extract_from_s3 import extract_all_data
+from scripts.extract_from_s3_1 import extract_all_data
 from transform_data import (
     transform_dim_customers,
     transform_dim_sellers,
