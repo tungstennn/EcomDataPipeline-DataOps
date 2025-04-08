@@ -151,9 +151,9 @@ if __name__ == "__main__":
 
     
     # print("Transformed DataFrames:")
-    print("Fact Orders:")
-    print(fact_orders.head())
-    print("📊 Columns in fact_orders:", fact_orders.columns.tolist())
+    #print("Fact Orders:")
+    #print(fact_orders.head())
+    #print("📊 Columns in fact_orders:", fact_orders.columns.tolist())
     # print("Dim customers:")
     # print(dim_customers.head())
     # print("Dim sellers:")
