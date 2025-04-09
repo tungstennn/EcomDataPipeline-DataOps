@@ -1,4 +1,4 @@
-from scripts.extract_from_s3_1 import extract_all_data # Import the function to extract data from S3, this is called at the end of the script
+from scripts.extract import extract_all_data # Import the function to extract data from S3, this is called at the end of the script
 import pandas as pd
 import numpy as np
 
@@ -134,34 +134,25 @@ def transform_fact_orders(orders_df, dim_customers, dim_sellers, dim_products, d
     return fact_orders # Return the final fact_orders dataframe
 
 
-
-if __name__ == "__main__":
-    data = extract_all_data()
-
+def transform(data):
+    # Master transform function that returns all transformed tables
     dim_customers = transform_dim_customers(data['olist_customers_dataset'], data['olist_geolocation_dataset'])
     dim_sellers = transform_dim_sellers(data['olist_sellers_dataset'], data['olist_geolocation_dataset'])
     dim_products = transform_dim_products(data['olist_products_dataset'], data['product_category_name_translation'])
     dim_items = transform_dim_items(data['olist_order_items_dataset'], data['olist_order_reviews_dataset'])
     dim_payments = transform_dim_payments(data['olist_order_payments_dataset'])
     orders_df = transform_orders(data['olist_orders_dataset'])
-    
+
     fact_orders = transform_fact_orders(
         orders_df, dim_customers, dim_sellers, dim_products, dim_items, dim_payments
     )
 
-    
-    # print("Transformed DataFrames:")
-    #print("Fact Orders:")
-    #print(fact_orders.head())
-    #print("📊 Columns in fact_orders:", fact_orders.columns.tolist())
-    # print("Dim customers:")
-    # print(dim_customers.head())
-    # print("Dim sellers:")
-    # print(dim_sellers.head())
-    # print("Dim products:")
-    # print(dim_products.head())
-    # print("Dim items:")
-    # print(dim_items.head())
-    # print("Dim payments:")
-    # print(dim_payments.head())
-    
+    return {
+        'dim_customers': dim_customers,
+        'dim_sellers': dim_sellers,
+        'dim_products': dim_products,
+        'dim_items': dim_items,
+        'dim_payments': dim_payments,
+        #'orders': orders_df,
+        'fact_orders': fact_orders
+    }

@@ -36,7 +36,7 @@ def extract_all_data():
         df = get_dataframe_from_s3(file)
         name = file.replace(".csv", "")
         data[name] = df
-    return data
 
+    return data
 if __name__ == "__main__":
     all_data = extract_all_data()
