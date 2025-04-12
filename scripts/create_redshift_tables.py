@@ -3,24 +3,32 @@ import os
 import psycopg2
 
 # Load .env from the parent directory (project root)
-load_dotenv(dotenv_path='../.env')
+load_dotenv(dotenv_path='.env')
 
-conn = psycopg2.connect(
-    host=os.getenv('REDSHIFT_HOST'),
-    port=os.getenv('REDSHIFT_PORT'),
-    user=os.getenv('REDSHIFT_USER'),
-    password=os.getenv('REDSHIFT_PASSWORD'),
-    dbname=os.getenv('REDSHIFT_DB')
-)
+def create_tables():
+    # Create tables in Redshift using the SQL script.
 
-cur = conn.cursor()
+    conn = psycopg2.connect(
+        host=os.getenv('REDSHIFT_HOST'),
+        port=os.getenv('REDSHIFT_PORT'),
+        user=os.getenv('REDSHIFT_USER'),
+        password=os.getenv('REDSHIFT_PASSWORD'),
+        dbname=os.getenv('REDSHIFT_DB')
+    )
+    print("🔗 Connected to Redshift")
+    
+    cur = conn.cursor()
+    print("📜 Creating tables in Redshift...")
+    with open('sql/create_tables.sql', 'r') as f:
+        sql_script = f.read()
 
-with open('../sql/create_tables.sql', 'r') as f:
-    sql_script = f.read()
+    cur.execute(sql_script)
+    conn.commit()
 
-cur.execute(sql_script)
-conn.commit()
+    cur.close()
+    conn.close()
+    #print("✅ Tables created successfully.")
+    
+create_tables()
+#print("Host:", os.getenv("REDSHIFT_HOST"))
 
-cur.close()
-conn.close()
-print("✅ Tables created successfully.")
