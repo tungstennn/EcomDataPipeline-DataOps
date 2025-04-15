@@ -5,30 +5,20 @@ import psycopg2
 # Load .env from the parent directory (project root)
 load_dotenv(dotenv_path='.env')
 
-def create_tables():
+def create_tables(conn, cur):
     # Create tables in Redshift using the SQL script.
+    try:
+        print("📜 Creating tables in Redshift...")
+        with open('sql/create_tables.sql', 'r') as f:
+            sql_script = f.read()
 
-    conn = psycopg2.connect(
-        host=os.getenv('REDSHIFT_HOST'),
-        port=os.getenv('REDSHIFT_PORT'),
-        user=os.getenv('REDSHIFT_USER'),
-        password=os.getenv('REDSHIFT_PASSWORD'),
-        dbname=os.getenv('REDSHIFT_DB')
-    )
-    print("🔗 Connected to Redshift")
-    
-    cur = conn.cursor()
-    print("📜 Creating tables in Redshift...")
-    with open('sql/create_tables.sql', 'r') as f:
-        sql_script = f.read()
+        cur.execute(sql_script)
+        conn.commit()
 
-    cur.execute(sql_script)
-    conn.commit()
+        print("✅ Tables created successfully")
+        
+    except Exception as e:
+        print(f"❌ Error creating tables: {e}")
+        conn.rollback()
 
-    cur.close()
-    conn.close()
-    #print("✅ Tables created successfully.")
-    
-create_tables()
-#print("Host:", os.getenv("REDSHIFT_HOST"))
 
