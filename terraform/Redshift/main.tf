@@ -2,6 +2,7 @@ resource "aws_redshiftserverless_namespace" "redshift" {
   namespace_name      = "dataops-warehouse"
   admin_username      = var.admin_username
   admin_user_password = var.admin_user_password
+  iam_roles           = [var.iam_role_arn] # IAM role for S3 access
 }
 
 resource "aws_redshiftserverless_workgroup" "redshift_workgroup" {
