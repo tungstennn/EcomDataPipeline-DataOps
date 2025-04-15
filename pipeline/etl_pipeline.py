@@ -1,35 +1,31 @@
-from scripts.extract import extract_all_data
-from scripts.transform import transform
-from scripts.load import load_to_s3
+#from scripts.extract import extract_all_data
+#from scripts.transform import transform
+#from scripts.load import load_to_s3
+#from dotenv import load_dotenv
+
 from scripts.create_redshift_tables import create_tables
-from dotenv import load_dotenv
+from scripts.redshift_utils import connect_to_redshift, close_redshift_connection
+from scripts.copy_to_redshift import copy_data
 
 
 def run_pipeline():
-    print("Starting ETL pipeline...")
-    print('---------------------------------------')
+    conn, cur = connect_to_redshift()
     
-    # Extract data from S3
-    print('\nExtracting data from S3...')
-    raw_data = extract_all_data()
-    print("\n✅ Data extracted successfully!")
+    if conn is None or cur is None:
+        print("❌ Failed to create Redshift connection. Exiting.")
+        return
+    try:
+        create_tables(conn, cur)
+        copy_data(conn,cur)
+        conn.commit()
+        
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        conn.rollback()
+        
+    finally:
+        close_redshift_connection(conn, cur)
     
-    # Transform data locally
-    print('\nTransforming data...')
-    transformed_data = transform(raw_data)
-    print("\n✅ Data transformed successfully!")
-    
-    # Load transformed data to S3
-    print('\nLoading into S3...')
-    load_to_s3(transformed_data)
-    print("\n✅ Data loaded to S3 successfully!")
-    print('---------------------------------------')
-    print("\n✅ ETL pipeline completed successfully!")
-    
-    # Create tables in Redshift
-    print('\nCreating tables in Redshift...')
-    create_tables()
-    print("\n✅ Tables created successfully!")
     
 if __name__ == "__main__":
     run_pipeline()
