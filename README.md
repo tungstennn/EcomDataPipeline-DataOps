@@ -42,7 +42,7 @@ E-commerce businesses often store transactional data in **AWS S3**, but it remai
   - Infrastructure is fully reproducible via code and can be torn down/recreated reliably
 
 - **Exploratory Data Analysis (EDA)**
-  - Performed EDA on raw CSVs (from the Olist dataset) to understand:
+  - Performed EDA using python pandas on raw CSVs (from the Olist dataset) to understand:
     - Schema structure and relationships between entities
     - Data types, null values, inconsistencies, and distributions
     - Business-relevant metrics (e.g. sales volume, delivery performance, review scores)
