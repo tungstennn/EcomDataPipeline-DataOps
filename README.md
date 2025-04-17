@@ -1,34 +1,35 @@
-# End-to-End DataOps Batch ETL Project
+# End-to-End DataOps Batch ELT Project
 
 ## 1. Project Overview
-This project builds an **ETL pipeline** that transforms raw sales transaction data from **AWS S3** into an **Amazon Redshift** data warehouse for **business intelligence (BI) and reporting**. The pipeline follows a **star schema model** and is orchestrated using **Apache Airflow (local setup)**.
+This project builds an **ELT pipeline** that loads raw sales transaction data from **AWS S3** into an **Amazon Redshift** data warehouse, where it is then transformed for **business intelligence (BI) and reporting**. The pipeline follows a **star schema model** and is orchestrated using **Apache Airflow (local setup)**.
 
-This project leverages S3 as a data lake for structured historical data from an OLTP database, skipping the ingestion layer. The highly normalized OLTP data lacks business logic, making analysis difficult. To address this, I apply dimensional star schema modeling and business logic to enhance clarity and align with data warehousing standards. The ultimate goal is to create a Single Customer View (SCV), providing a unified dataset that improves insights, decision-making, and customer interactions across the data ecosystem.
+The project uses S3 as a data lake to store structured historical data from an OLTP system. Because OLTP data is highly normalized and lacks business logic, it is not immediately useful for analysis. To address this, raw data is first **loaded into Redshift staging tables**, and then transformed into analytical **fact and dimension tables** using **SQL-based transformations** aligned with dimensional modeling standards. The final objective is to produce a **Single Customer View (SCV)** that enhances decision-making and insight generation across the business.
 
 ## 2. Problem Statement
-E-commerce businesses store transactional data in **AWS S3**, but it remains **semi-structured and inefficient** for analysis. This project automates the process of extracting, transforming, and loading **new batch data** daily, enabling efficient sales, customer, and product analytics in **Redshift**.
+E-commerce businesses often store transactional data in **AWS S3**, but it remains **semi-structured and inefficient** for analysis. This project automates the daily batch **loading** of new data into **Amazon Redshift**, where it is then **transformed** into a clean, denormalized schema for sales, customer, and product analytics.
 
 ## 3. Project Scope
-### **Infrastructure (Terraform-Managed AWS Resources)**
-✅ **Amazon S3** – Historical structued transanctional data (Data Lake)  
-✅ **Amazon Redshift (Serverless)** – Data warehouse for analytics  
-✅ **IAM Roles & Policies** – Secure S3-Redshift access  
-✅ **Apache Airflow (Local Setup)** – Orchestrates the ETL workflow  
 
-### **ETL Process**
-**1. Extract**: Copy new batch data from **S3** (Parquet format)  
-**2. Transform**: Clean and structure data into **fact and dimension tables** using star schema approach and apply business logic  
-**3. Load**: Store transformed data in **Amazon Redshift** for analytical purposes  
-**4. Orchestrate**: Automate ETL execution using **Airflow DAGs (local setup)**  
+### **Infrastructure (Terraform-Managed AWS Resources)**
+✅ **Amazon S3** – Historical structured transactional data (Data Lake)  
+✅ **Amazon Redshift (Serverless)** – Data warehouse for ELT operations  
+✅ **IAM Roles & Policies** – Secure S3-Redshift access  
+✅ **Apache Airflow (Local Setup)** – Orchestrates the ELT workflow  
+
+### **ELT Process**
+**1. Extract**: Detect and prepare new batch files stored in **S3** (Parquet format)  
+**2. Load**: Ingest raw data into **Redshift staging tables**  
+**3. Transform**: Use **SQL and/or dbt** to create **fact and dimension tables** within Redshift, applying business logic and dimensional modeling  
+**4. Orchestrate**: Automate the ELT pipeline with **Airflow DAGs (local setup)**  
 
 ## 4. Tech Stack
 - **Infrastructure as Code**: Terraform
-- **Cloud Services**: AWS S3 (Data lake - Parquet format), Redshift (Data Warehouse), IAM
-- **ETL Framework**: Python (Pandas/PySpark)
+- **Cloud Services**: AWS S3 (Data Lake), Redshift (Data Warehouse), IAM
+- **ELT Framework**: Python (for orchestration), SQL (for transformations), optionally dbt
 - **Orchestration**: Apache Airflow (Local Setup)
 
 ---
 ### 📌 **Status:** In Progress ⏳  
-A detailed breakdown of the ETL process and schema will be added upon completion
+A detailed breakdown of the ELT pipeline and schema will be added upon completion
 
 ---
