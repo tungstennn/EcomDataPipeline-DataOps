@@ -16,7 +16,7 @@ E-commerce businesses often store transactional data in **AWS S3**, but it remai
 ✅ **IAM Roles & Policies** – Secure S3-Redshift access  
 ✅ **Apache Airflow (Local Setup)** – Orchestrates the ELT workflow  
 
-```
+
 flowchart TD
     A[Raw CSVs (Olist Dataset)] --> B[S3 Data Lake (Parquet Format)]
 
@@ -39,7 +39,7 @@ flowchart TD
     G --> B
     G --> C
     G --> D
-```
+
 
 ## 4. Tech Stack
 - **Infrastructure as Code**: Terraform
