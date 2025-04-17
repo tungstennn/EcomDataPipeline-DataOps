@@ -1,3 +1,14 @@
+-- Clear staging tables to avoid duplication
+TRUNCATE stg_customers;
+TRUNCATE stg_geolocation;
+TRUNCATE stg_order_items;
+TRUNCATE stg_order_payments;
+TRUNCATE stg_order_reviews;
+TRUNCATE stg_orders;
+TRUNCATE stg_products;
+TRUNCATE stg_sellers;
+TRUNCATE stg_product_category_name_translation;
+
 -- COPY raw CSVs from S3 to staging tables in Redshift
 
 COPY stg_customers
