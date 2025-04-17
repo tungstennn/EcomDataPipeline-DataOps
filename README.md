@@ -38,7 +38,7 @@ graph TD
     G --> B
     G --> C
     G --> D
-
+```
 
 
 ## 4. Tech Stack
