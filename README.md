@@ -29,7 +29,59 @@ E-commerce businesses often store transactional data in **AWS S3**, but it remai
 - **Orchestration**: Apache Airflow (Local Setup)
 
 ---
-### 📌 **Status:** In Progress ⏳  
-A detailed breakdown of the ELT pipeline and schema will be added upon completion
 
+## 6. Project Milestones & Remaining Work
+
+### ✅ Completed Work
+
+- **Provisioned Infrastructure with Terraform**
+  - Set up and configured AWS services using Terraform modules:
+    - **Amazon S3** bucket for storing raw data in Parquet format
+    - **Amazon Redshift Serverless** cluster for data warehousing
+    - **IAM roles and policies** to securely allow Redshift to access data in S3
+  - Infrastructure is fully reproducible via code and can be torn down/recreated reliably
+
+- **Exploratory Data Analysis (EDA)**
+  - Performed EDA on raw CSVs (from the Olist dataset) to understand:
+    - Schema structure and relationships between entities
+    - Data types, null values, inconsistencies, and distributions
+    - Business-relevant metrics (e.g. sales volume, delivery performance, review scores)
+  - Used insights from EDA to inform star schema design and transformation logic
+
+- **Data Ingestion into Redshift**
+  - Uploaded raw CSVs into the S3 bucket in preparation for batch processing
+  - Created Redshift **staging tables** for each dataset to mirror the raw structure
+  - Loaded data from S3 into Redshift staging using `COPY` commands
+
+- **SQL Transformations & Business Logic**
+  - Designed a **star schema** with appropriate fact and dimension tables
+  - Wrote SQL scripts to:
+    - Join, clean, and reshape staging data
+    - Apply core business rules (e.g. aggregations, derived metrics, handling duplicates)
+    - Populate fact tables (e.g. orders, order items) and dimension tables (e.g. customers, products)
+      
 ---
+
+### 🔧 Remaining Work
+
+- [ ] **Develop Airflow DAGs**
+  - Automate ELT pipeline to run batch loads on a schedule
+  - Modularize tasks: file detection → staging load → transformation execution
+
+- [ ] **Add logging and alerting**
+  - Implement logs for each pipeline step (success/failure status)
+  - Integrate basic error notifications for failed DAG runs
+
+- [ ] **Perform data quality checks and validation**
+  - Ensure row counts and schema match between staging and final tables
+  - Implement validation rules (e.g. no nulls in primary keys, expected value ranges)
+
+- [ ] **Document data flow and transformation logic**
+  - Create clear documentation for:
+    - Schema design (ERD or markdown)
+    - Column-level transformation rules
+    - Data lineage from raw to final
+
+- [ ] **Optional: Build dashboard for insights**
+  - Connect Redshift to Tableau, QuickSight, or Streamlit
+  - Visualize KPIs like revenue trends, top customers, product performance
