@@ -30,7 +30,7 @@ E-commerce businesses often store transactional data in **AWS S3**, but it remai
 
 ---
 
-## 6. Project Milestones & Remaining Work
+## 5. Project Milestones & Remaining Work
 
 ### ✅ Completed Work
 
