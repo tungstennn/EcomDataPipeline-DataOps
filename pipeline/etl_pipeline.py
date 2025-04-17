@@ -6,6 +6,7 @@
 from scripts.create_redshift_tables import create_tables
 from scripts.redshift_utils import connect_to_redshift, close_redshift_connection
 from scripts.copy_to_redshift import copy_data
+from scripts.sql_transform import transform
 
 
 def run_pipeline():
@@ -17,6 +18,7 @@ def run_pipeline():
     try:
         create_tables(conn, cur)
         copy_data(conn,cur)
+        transform(conn,cur)
         conn.commit()
         
     except Exception as e:
