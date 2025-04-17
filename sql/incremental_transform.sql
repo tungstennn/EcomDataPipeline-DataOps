@@ -25,7 +25,16 @@ LEFT JOIN (
     WHERE geolocation_zip_code_prefix IS NOT NULL
     GROUP BY geolocation_zip_code_prefix
 ) g ON CAST(c.customer_zip_code_prefix AS INT) = g.geolocation_zip_code_prefix
-WHERE c.customer_id NOT IN (SELECT customer_id FROM dim_customers);
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM dim_customers d
+    WHERE d.customer_id = c.customer_id
+      AND d.customer_zip_code_prefix = CAST(c.customer_zip_code_prefix AS INT)
+      AND d.customer_city = c.customer_city
+      AND d.customer_state = c.customer_state
+      AND d.geolocation_lat = g.avg_lat
+      AND d.geolocation_lng = g.avg_lng
+);
 
 -- Seller Dimension Table Incremental Load
 
@@ -54,8 +63,16 @@ LEFT JOIN (
     WHERE geolocation_zip_code_prefix IS NOT NULL
     GROUP BY geolocation_zip_code_prefix
 ) g ON s.seller_zip_code_prefix = g.geolocation_zip_code_prefix
-WHERE s.seller_id NOT IN (SELECT seller_id FROM dim_sellers);
-
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM dim_sellers d
+    WHERE d.seller_id = s.seller_id
+      AND d.seller_zip_code_prefix = CAST(s.seller_zip_code_prefix AS INT)
+      AND d.seller_city = s.seller_city
+      AND d.seller_state = s.seller_state
+      AND d.geolocation_lat = g.avg_lat
+      AND d.geolocation_lng = g.avg_lng
+);
 -- Product Dimension Table Incremental Load
 
 INSERT INTO dim_products (
@@ -68,7 +85,12 @@ SELECT
 FROM stg_products p
 LEFT JOIN stg_product_category_name_translation t
     ON p.product_category_name = t.product_category_name
-WHERE p.product_id NOT IN (SELECT product_id FROM dim_products);
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM dim_products d
+    WHERE d.product_id = p.product_id
+      AND d.product_category_name_english = t.product_category_name_english
+);
 
 -- Items Dimension Table Incremental Load
 
@@ -92,8 +114,16 @@ SELECT
 FROM stg_order_items i
 LEFT JOIN stg_order_reviews r
     ON i.order_id = r.order_id
-WHERE (i.order_id, i.product_id, i.seller_id) NOT IN (
-    SELECT order_id, product_id, seller_id FROM dim_items
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM dim_items d
+    WHERE d.order_id = i.order_id
+      AND d.product_id = i.product_id
+      AND d.seller_id = i.seller_id
+      AND d.price = CAST(i.price AS FLOAT4)
+      AND d.freight_value = CAST(i.freight_value AS FLOAT4)
+      AND d.review_id = r.review_id
+      AND d.review_score = r.review_score
 );
 
 -- Payments Dimension Table Incremental Load
@@ -110,7 +140,14 @@ SELECT
     p.payment_installments,
     CAST(p.payment_value AS FLOAT4)
 FROM stg_order_payments p
-WHERE p.order_id NOT IN (SELECT order_id FROM dim_payments);
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM dim_payments d
+    WHERE d.order_id = p.order_id
+      AND d.payment_type = p.payment_type
+      AND d.payment_installments = p.payment_installments
+      AND d.payment_value = CAST(p.payment_value AS FLOAT4)
+);
 
 -- Orders Fact Table Incremental Load: One Row Per Order
 
@@ -171,4 +208,10 @@ LEFT JOIN (
            SUM(payment_value) AS payment_value
     FROM dim_payments
     GROUP BY order_id
-) pay ON o.order_id = pay.order_id;
+) pay ON o.order_id = pay.order_id
+
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM fact_orders f
+    WHERE f.order_id = o.order_id
+);
