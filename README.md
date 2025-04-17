@@ -68,20 +68,6 @@ E-commerce businesses often store transactional data in **AWS S3**, but it remai
   - Automate ELT pipeline to run batch loads on a schedule
   - Modularize tasks: file detection → staging load → transformation execution
 
-- [ ] **Add logging and alerting**
-  - Implement logs for each pipeline step (success/failure status)
-  - Integrate basic error notifications for failed DAG runs
-
-- [ ] **Perform data quality checks and validation**
-  - Ensure row counts and schema match between staging and final tables
-  - Implement validation rules (e.g. no nulls in primary keys, expected value ranges)
-
-- [ ] **Document data flow and transformation logic**
-  - Create clear documentation for:
-    - Schema design (ERD or markdown)
-    - Column-level transformation rules
-    - Data lineage from raw to final
-
-- [ ] **Optional: Build dashboard for insights**
+- [ ] **Build dashboard for insights**
   - Connect Redshift to Tableau, QuickSight, or Streamlit
   - Visualize KPIs like revenue trends, top customers, product performance
