@@ -16,8 +16,31 @@ E-commerce businesses often store transactional data in **AWS S3**, but it remai
 ✅ **IAM Roles & Policies** – Secure S3-Redshift access  
 ✅ **Apache Airflow (Local Setup)** – Orchestrates the ELT workflow  
 
-<pre> ```mermaid graph TD A["Raw CSVs (Olist Dataset)"] --> B["S3 Data Lake (Parquet Format)"] B --> C["Amazon Redshift - Staging Tables"] C --> D["Amazon Redshift - SQL Transformations"] D --> E["Amazon Redshift - Star Schema (Fact & Dimension Tables)"] E --> F["BI & Reporting Layer (Tableau / QuickSight / Streamlit)"] subgraph "Terraform-Provisioned Infrastructure" B C D E end subgraph "Orchestration" G["Apache Airflow (Local)"] end G --> B G --> C G --> D ``` </pre>
+```mermaid
+graph TD
+    A[Raw Sales Transaction Data (CSV)] --> B[Upload to Amazon S3 (Parquet Format)]
+    B --> C[Load into Redshift Staging Tables]
+    C --> D[SQL-Based Transformations]
+    D --> E[Create Star Schema (Fact & Dimension Tables)]
+    E --> F[Single Customer View (SCV)]
+    F --> G[Optional: BI Dashboard (Tableau / QuickSight / Streamlit)]
 
+    subgraph Terraform-Provisioned Infrastructure
+        B
+        C
+        D
+        E
+    end
+
+    subgraph Orchestration (Planned)
+        H[Apache Airflow (Local)]
+    end
+
+    H --> B
+    H --> C
+    H --> D
+    H --> E
+```
 
 ## 4. Tech Stack
 - **Infrastructure as Code**: Terraform
