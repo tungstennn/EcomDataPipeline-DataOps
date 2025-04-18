@@ -46,7 +46,7 @@ graph TD
 
 - **Infrastructure as Code**: Terraform
 - **Cloud Services**: AWS S3 (Data Lake), Amazon Redshift (Data Warehouse), IAM
-- **Scripting & Automation**: Python (for executing SQL scripts, EDA with Pandas, Redshift connection via psycopg2)
+- **Scripting & Automation**: Python (EDA with Pandas, for executing SQL scripts and Redshift connection via psycopg2)
 - **Transformation Framework**: SQL (Redshift), optionally dbt
 - **Orchestration**: Apache Airflow (Local Setup)
 
