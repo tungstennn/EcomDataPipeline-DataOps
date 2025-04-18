@@ -23,7 +23,7 @@ graph TD
     C --> D["SQL-Based Transformations"]
     D --> E["Create Star Schema (Fact & Dimension Tables)"]
     E --> F["Single Customer View (SCV)"]
-    F --> G["Optional: BI Dashboard - Tableau / QuickSight / Streamlit"]
+    F --> G["BI Dashboard - Tableau / QuickSight / Streamlit"]
 
     subgraph "Terraform-Provisioned Infrastructure"
         B
@@ -33,7 +33,7 @@ graph TD
     end
 
     subgraph "Orchestration (Planned)"
-        H["Apache Airflow (Local)"]
+        H["Apache Airflow (Local) Scheduled to run daily"]
     end
 
     H --> B
