@@ -18,28 +18,29 @@ E-commerce businesses often store transactional data in **AWS S3**, but it remai
 
 ```mermaid
 graph TD
-    A[Raw Sales Transaction Data (CSV)] --> B[Upload to Amazon S3 (Parquet Format)]
-    B --> C[Load into Redshift Staging Tables]
-    C --> D[SQL-Based Transformations]
-    D --> E[Create Star Schema (Fact & Dimension Tables)]
-    E --> F[Single Customer View (SCV)]
-    F --> G[Optional: BI Dashboard (Tableau / QuickSight / Streamlit)]
+    A["Raw Sales Transaction Data (CSV)"] --> B["Upload to Amazon S3 (Parquet Format)"]
+    B --> C["Load into Redshift Staging Tables"]
+    C --> D["SQL-Based Transformations"]
+    D --> E["Create Star Schema (Fact & Dimension Tables)"]
+    E --> F["Single Customer View (SCV)"]
+    F --> G["Optional: BI Dashboard - Tableau / QuickSight / Streamlit"]
 
-    subgraph Terraform-Provisioned Infrastructure
+    subgraph "Terraform-Provisioned Infrastructure"
         B
         C
         D
         E
     end
 
-    subgraph Orchestration (Planned)
-        H[Apache Airflow (Local)]
+    subgraph "Orchestration (Planned)"
+        H["Apache Airflow (Local)"]
     end
 
     H --> B
     H --> C
     H --> D
     H --> E
+
 ```
 
 ## 4. Tech Stack
