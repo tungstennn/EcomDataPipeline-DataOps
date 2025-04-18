@@ -43,9 +43,11 @@ graph TD
 ```
 
 ## 4. Tech Stack
+
 - **Infrastructure as Code**: Terraform
-- **Cloud Services**: AWS S3 (Data Lake), Redshift (Data Warehouse), IAM
-- **ELT Framework**: Python (for orchestration), SQL (for transformations), optionally dbt
+- **Cloud Services**: AWS S3 (Data Lake), Amazon Redshift (Data Warehouse), IAM
+- **Scripting & Automation**: Python (for executing SQL scripts, EDA with Pandas, Redshift connection via psycopg2)
+- **Transformation Framework**: SQL (Redshift), optionally dbt
 - **Orchestration**: Apache Airflow (Local Setup)
 
 ---
