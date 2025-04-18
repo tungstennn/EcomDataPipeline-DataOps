@@ -25,14 +25,16 @@ graph TD
     E --> F["Single Customer View (SCV)"]
     F --> G["Optional: BI Dashboard - Tableau / QuickSight / Streamlit"]
 
-    subgraph "Terraform-Provisioned Infrastructure 🟨"
+    subgraph TF[ ]
+        direction TB
+        X["Terraform-Provisioned Infrastructure"]
         B
         C
         D
         E
     end
 
-    subgraph "Orchestration (Planned) 🟨"
+    subgraph OR["Orchestration (Planned)"]
         H["Apache Airflow (Local)"]
     end
 
@@ -40,8 +42,6 @@ graph TD
     H --> C
     H --> D
     H --> E
-
-
 ```
 
 ## 4. Tech Stack
