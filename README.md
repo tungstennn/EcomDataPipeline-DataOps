@@ -8,13 +8,7 @@ The project uses S3 as a data lake to store structured historical data from an O
 ## 2. Problem Statement
 E-commerce businesses often store transactional data in **AWS S3**, but it remains **semi-structured and inefficient** for analysis. This project automates the daily batch **loading** of new data into **Amazon Redshift**, where it is then **transformed** into a clean, denormalized schema for sales, customer, and product analytics.
 
-## 3. Project Scope
-
-### **Infrastructure (Terraform-Managed AWS Resources)**
-✅ **Amazon S3** – Historical structured transactional data (Data Lake)  
-✅ **Amazon Redshift (Serverless)** – Data warehouse for ELT operations  
-✅ **IAM Roles & Policies** – Secure S3-Redshift access  
-✅ **Apache Airflow (Local Setup)** – Orchestrates the ELT workflow  
+## 3. Flow Diagram
 
 ```mermaid
 graph TD
