@@ -25,16 +25,14 @@ graph TD
     E --> F["Single Customer View (SCV)"]
     F --> G["Optional: BI Dashboard - Tableau / QuickSight / Streamlit"]
 
-    subgraph TF[ ]
-        direction TB
-        X["Terraform-Provisioned Infrastructure"]
+    subgraph "Terraform-Provisioned Infrastructure"
         B
         C
         D
         E
     end
 
-    subgraph OR["Orchestration (Planned)"]
+    subgraph "Orchestration (Planned)"
         H["Apache Airflow (Local)"]
     end
 
