@@ -76,7 +76,7 @@ graph TD
     - Apply core business rules (e.g. aggregations, derived metrics, handling duplicates)
     - Populate fact tables (e.g. orders, order items) and dimension tables (e.g. customers, products)
    
-- **Developed Airflow DAG**
+- **Developed Airflow DAG file**
     - Created production-ready DAGs to automate the ELT pipeline
     - DAG scheduled to run daily via Airflow local webserver
       
