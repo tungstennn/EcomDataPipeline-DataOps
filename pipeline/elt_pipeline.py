@@ -3,6 +3,11 @@
 #from scripts.load import load_to_s3
 #from dotenv import load_dotenv
 
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/.."))
+
 from scripts.create_redshift_tables import create_tables
 from scripts.redshift_utils import connect_to_redshift, close_redshift_connection
 from scripts.copy_to_redshift import copy_data
