@@ -75,14 +75,14 @@ graph TD
     - Join, clean, and reshape staging data
     - Apply core business rules (e.g. aggregations, derived metrics, handling duplicates)
     - Populate fact tables (e.g. orders, order items) and dimension tables (e.g. customers, products)
+   
+- **Developed Airflow DAG**
+    - Created production-ready DAGs to automate the ELT pipeline
+    - DAG scheduled to run daily via Airflow local webserver
       
 ---
 
 ### 🔧 Remaining Work
-
-- [ ] **Develop Airflow DAGs**
-  - Automate ELT pipeline to run batch loads on a schedule
-  - Modularize tasks: file detection → staging load → transformation execution
 
 - [ ] **Build dashboard for insights**
   - Connect Redshift to Tableau, QuickSight, or Streamlit
