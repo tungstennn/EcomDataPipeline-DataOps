@@ -14,7 +14,7 @@ E-commerce businesses often store transactional data in **AWS S3**, but it remai
 ```mermaid
 graph TD
     A["Raw Sales Transaction Data (Local)"] --> B["Upload to Amazon S3"]
-    B --> C["Load into Redshift Staging Tables"]
+    B --> C["COPY into Redshift Staging Tables"]
     C --> D["SQL-Based Transformations"]
     D --> E["Create Star Schema (Fact & Dimension Tables)"]
     E --> F["Single Customer View (SCV)"]
