@@ -20,7 +20,7 @@ graph TD
     E --> F["Single Customer View (SCV)"]
     F --> G["BI Dashboard - Tableau / QuickSight / Streamlit"]
 
-    subgraph "Terraform-Provisioned Infrastructure"
+    subgraph "Terraform-Provisioned Infra"
         B
         C
         D
