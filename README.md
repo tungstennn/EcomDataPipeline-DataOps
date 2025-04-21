@@ -32,7 +32,6 @@ graph TD
     end
 
     H --> B
-    H --> C
     H --> D
     H --> E
 ```
