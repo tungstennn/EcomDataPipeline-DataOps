@@ -31,7 +31,7 @@ graph TD
         H["Apache Airflow (Local) Scheduled to run daily"]
     end
 
-    H --> B
+    H --> C
     H --> D
     H --> E
 ```
