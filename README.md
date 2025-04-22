@@ -27,7 +27,7 @@ graph TD
         E
     end
 
-    subgraph "Orchestration"
+    subgraph "ELT Orchestration"
         H["Apache Airflow (Local) Scheduled to run daily"]
     end
 
