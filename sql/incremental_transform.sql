@@ -92,9 +92,9 @@ WHERE NOT EXISTS (
       AND d.product_category_name_english = t.product_category_name_english
 );
 
--- Items Dimension Table Incremental Load
+-- Fact Order Items Table Incremental Load
 
-INSERT INTO dim_items (
+INSERT INTO fact_order_items (
     order_id,
     product_id,
     seller_id,
@@ -107,8 +107,8 @@ SELECT
     i.order_id,
     i.product_id,
     i.seller_id,
-    CAST(i.price AS FLOAT4),
-    CAST(i.freight_value AS FLOAT4),
+    CAST(i.price AS FLOAT8),
+    CAST(i.freight_value AS FLOAT8),
     r.review_id,
     r.review_score
 FROM stg_order_items i
@@ -116,15 +116,16 @@ LEFT JOIN stg_order_reviews r
     ON i.order_id = r.order_id
 WHERE NOT EXISTS (
     SELECT 1
-    FROM dim_items d
-    WHERE d.order_id = i.order_id
-      AND d.product_id = i.product_id
-      AND d.seller_id = i.seller_id
-      AND d.price = CAST(i.price AS FLOAT4)
-      AND d.freight_value = CAST(i.freight_value AS FLOAT4)
-      AND d.review_id = r.review_id
-      AND d.review_score = r.review_score
+    FROM fact_order_items f
+    WHERE f.order_id = i.order_id
+      AND f.product_id = i.product_id
+      AND f.seller_id = i.seller_id
+      AND f.price = CAST(i.price AS FLOAT8)
+      AND f.freight_value = CAST(i.freight_value AS FLOAT8)
+      AND f.review_id = r.review_id
+      AND f.review_score = r.review_score
 );
+
 
 -- Payments Dimension Table Incremental Load
 
@@ -156,60 +157,16 @@ WHERE NOT EXISTS (
 INSERT INTO fact_orders (
     order_id,
     customer_id,
-    order_purchase_timestamp,
-    customer_city,
-    product_id,
-    seller_id,
-    price,
-    freight_value,
-    seller_city,
-    product_category_name_english,
-    payment_type,
-    payment_installments,
-    payment_value
+    order_purchase_timestamp
 )
 SELECT
     o.order_id,
     o.customer_id,
-    TO_TIMESTAMP(o.order_purchase_timestamp, 'YYYY-MM-DD HH24:MI:SS') AS order_purchase_timestamp,
-    c.customer_city,
-    i.product_id,
-    i.seller_id,
-    i.price,
-    i.freight_value,
-    s.seller_city,
-    p.product_category_name_english,
-    pay.payment_type,
-    pay.payment_installments,
-    pay.payment_value
+    TO_TIMESTAMP(o.order_purchase_timestamp, 'YYYY-MM-DD HH24:MI:SS')
 FROM (
     SELECT DISTINCT order_id, customer_id, order_purchase_timestamp
     FROM stg_orders
 ) o
-JOIN dim_customers c ON o.customer_id = c.customer_id
-
-LEFT JOIN (
-    SELECT order_id,
-           MIN(product_id) AS product_id,
-           MIN(seller_id) AS seller_id,
-           MIN(price) AS price,
-           MIN(freight_value) AS freight_value
-    FROM dim_items
-    GROUP BY order_id
-) i ON o.order_id = i.order_id
-
-LEFT JOIN dim_sellers s ON i.seller_id = s.seller_id
-LEFT JOIN dim_products p ON i.product_id = p.product_id
-
-LEFT JOIN (
-    SELECT order_id,
-           MIN(payment_type) AS payment_type,
-           MAX(payment_installments) AS payment_installments,
-           SUM(payment_value) AS payment_value
-    FROM dim_payments
-    GROUP BY order_id
-) pay ON o.order_id = pay.order_id
-
 WHERE NOT EXISTS (
     SELECT 1
     FROM fact_orders f
