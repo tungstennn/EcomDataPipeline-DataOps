@@ -27,8 +27,16 @@ CREATE TABLE IF NOT EXISTS dim_products (
     product_category_name_english VARCHAR
 );
 
--- Items dimension table
-CREATE TABLE IF NOT EXISTS dim_items (
+-- Payments dimension table
+CREATE TABLE IF NOT EXISTS dim_payments (
+    order_id VARCHAR PRIMARY KEY,
+    payment_type VARCHAR,
+    payment_installments INT,
+    payment_value FLOAT4
+);
+
+-- Order Items fact table
+CREATE TABLE IF NOT EXISTS fact_order_items (
     order_id VARCHAR,
     product_id VARCHAR,
     seller_id VARCHAR,
@@ -39,30 +47,11 @@ CREATE TABLE IF NOT EXISTS dim_items (
     PRIMARY KEY (order_id, product_id, seller_id)
 );
 
--- Payments dimension table
-CREATE TABLE IF NOT EXISTS dim_payments (
-    order_id VARCHAR PRIMARY KEY,
-    payment_type VARCHAR,
-    payment_installments INT,
-    payment_value FLOAT4
-);
-
-
 -- Orders fact table
 CREATE TABLE IF NOT EXISTS fact_orders (
     order_id VARCHAR PRIMARY KEY,
     customer_id VARCHAR,
-    order_purchase_timestamp TIMESTAMP,
-    customer_city VARCHAR,
-    product_id VARCHAR,
-    seller_id VARCHAR,
-    price FLOAT8,
-    freight_value FLOAT8,
-    seller_city VARCHAR,
-    product_category_name_english VARCHAR,
-    payment_type VARCHAR,
-    payment_installments INT,
-    payment_value FLOAT4
+    order_purchase_timestamp TIMESTAMP
 );
 
 
