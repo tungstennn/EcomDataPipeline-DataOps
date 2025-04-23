@@ -9,28 +9,28 @@ The project uses S3 as a data lake to store structured historical data from an O
 E-commerce businesses often store transactional data in **AWS S3**, but it remains **semi-structured and inefficient** for analysis. This project automates the daily batch **loading** of new data into **Amazon Redshift**, where it is then **transformed** into a clean, denormalized schema for sales, customer, and product analytics.
 
 ## 3. Flow Diagram
+> **Note**: This diagram is best viewed on desktop for proper rendering
 
 ```mermaid
 graph TD
     A["Raw Sales Transaction Data (Local)"] --> B["Upload to Amazon S3"]
-    B --> C["Load into Redshift Staging Tables"]
+    B --> C["COPY into Redshift Staging Tables"]
     C --> D["SQL-Based Transformations"]
     D --> E["Create Star Schema (Fact & Dimension Tables)"]
     E --> F["Single Customer View (SCV)"]
     F --> G["BI Dashboard - Tableau / QuickSight / Streamlit"]
 
-    subgraph "Terraform-Provisioned Infrastructure"
+    subgraph "Terraform-Provisioned Infra"
         B
         C
         D
         E
     end
 
-    subgraph "Orchestration (Planned)"
+    subgraph "ELT Orchestration"
         H["Apache Airflow (Local) Scheduled to run daily"]
     end
 
-    H --> B
     H --> C
     H --> D
     H --> E
@@ -75,14 +75,14 @@ graph TD
     - Join, clean, and reshape staging data
     - Apply core business rules (e.g. aggregations, derived metrics, handling duplicates)
     - Populate fact tables (e.g. orders, order items) and dimension tables (e.g. customers, products)
+   
+- **Developed Airflow DAG file**
+    - Created production-ready DAGs to automate the ELT pipeline
+    - DAG scheduled to run daily via Airflow local webserver
       
 ---
 
 ### 🔧 Remaining Work
-
-- [ ] **Develop Airflow DAGs**
-  - Automate ELT pipeline to run batch loads on a schedule
-  - Modularize tasks: file detection → staging load → transformation execution
 
 - [ ] **Build dashboard for insights**
   - Connect Redshift to Tableau, QuickSight, or Streamlit
