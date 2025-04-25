@@ -88,7 +88,7 @@ graph TD
   - Included annotations and explanatory text to highlight key insights
 
 ## 7. BI Dashboards
-> **Note**: Open this in Tableau Public Desktop to view interactively
+> **Note**: Download the file `Olist_Dashboard.twb` and open this in Tableau Public Desktop to view interactively
 
 ### Regional Sales & Performance Trends
 ![Regional Sales & Performance Trends](images/Regional%20Sales%20&%20Performance%20Trends.jpeg)
