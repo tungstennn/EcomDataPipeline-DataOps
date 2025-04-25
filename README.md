@@ -79,11 +79,10 @@ graph TD
 - **Developed Airflow DAG file**
     - Created production-ready DAGs to automate the ELT pipeline
     - DAG scheduled to run daily via Airflow local webserver
-      
----
 
-### 🔧 Remaining Work
-
-- [ ] **Build dashboard for insights**
-  - Connect Redshift to Tableau, QuickSight, or Streamlit
-  - Visualize KPIs like revenue trends, top customers, product performance
+- **Built BI Dashboard in Tableau Public**
+  - Exported analytical tables as CSV from Redshift using Python
+  - Built two dashboards:
+    - **Top Customers & Geographic Insights**: customer spending patterns, review scores, and distribution across Brazil
+    - **Regional Sales & Performance Trends**: revenue trends, high-performing states/cities, and average order value
+  - Included annotations and explanatory text to highlight key insights
