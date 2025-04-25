@@ -86,3 +86,9 @@ graph TD
     - **Top Customers & Geographic Insights**: customer spending patterns, review scores, and distribution across Brazil
     - **Regional Sales & Performance Trends**: revenue trends, high-performing states/cities, and average order value
   - Included annotations and explanatory text to highlight key insights
+
+## BI Dashboards
+### Regional Sales & Performance Trends
+![Regional Sales & Performance Trends](images/Regional Sales & Performance Trends.jpeg)
+### Top Customers & Geographic Insights
+![Top Customers & Geographic Insights](images/Top Customers & Geographic Insights.jpeg)
