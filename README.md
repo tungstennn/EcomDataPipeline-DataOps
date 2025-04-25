@@ -87,7 +87,7 @@ graph TD
     - **Regional Sales & Performance Trends**: revenue trends, high-performing states/cities, and average order value
   - Included annotations and explanatory text to highlight key insights
 
-## BI Dashboards
+## 7. BI Dashboards
 
 ### Regional Sales & Performance Trends
 ![Regional Sales & Performance Trends](images/Regional%20Sales%20&%20Performance%20Trends.jpeg)
