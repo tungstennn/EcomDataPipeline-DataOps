@@ -88,7 +88,10 @@ graph TD
   - Included annotations and explanatory text to highlight key insights
 
 ## BI Dashboards
+
 ### Regional Sales & Performance Trends
-![Regional Sales & Performance Trends](images/'Regional Sales & Performance Trends.jpeg')
+![Regional Sales & Performance Trends](images/Regional%20Sales%20&%20Performance%20Trends.jpeg)
+
 ### Top Customers & Geographic Insights
-![Top Customers & Geographic Insights](images/'Top Customers & Geographic Insights.jpeg')
+![Top Customers & Geographic Insights](images/Top%20Customers%20&%20Geographic%20Insights.jpeg)
+
