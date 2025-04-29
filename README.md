@@ -18,7 +18,7 @@ graph TD
     C --> D["SQL-Based Transformations"]
     D --> E["Create Star Schema (Fact & Dimension Tables)"]
     E --> F["Single Customer View (SCV)"]
-    F --> G["BI Dashboard - Tableau / QuickSight / Streamlit"]
+    F --> G["BI Dashboard - Tableau"]
 
     subgraph "Terraform-Provisioned Infra"
         B
@@ -46,7 +46,7 @@ graph TD
 
 ---
 
-## 5. Project Milestones & Remaining Work
+## 5. Project Milestones
 
 ### ✅ Completed Work
 
