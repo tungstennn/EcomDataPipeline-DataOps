@@ -80,7 +80,7 @@ graph TD
     - Created production-ready DAGs to automate the ELT pipeline
     - DAG scheduled to run daily via Airflow local webserver
     - Below is a successful DAG run in the Airflow UI:
-![airflow_webserver](images/airflow_ui).png)
+![airflow_webserver](images/airflow_ui.png)
 
 - **Built BI Dashboard in Tableau Public**
   - Exported analytical tables as CSV from Redshift using Python
