@@ -75,6 +75,8 @@ graph TD
     - Join, clean, and reshape staging data
     - Apply core business rules (e.g. aggregations, derived metrics, handling duplicates)
     - Populate fact tables (e.g. orders, order items) and dimension tables (e.g. customers, products)
+    - Below is the ERD diagram of the fact and dimension tables produced:
+![ERD](images/ERD.png)
    
 - **Developed Airflow DAG file**
     - Created production-ready DAGs to automate the ELT pipeline
