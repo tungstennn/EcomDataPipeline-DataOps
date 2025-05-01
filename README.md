@@ -90,6 +90,7 @@ graph TD
     - **Top Customers & Geographic Insights**: customer spending patterns, review scores, and distribution across Brazil
     - **Regional Sales & Performance Trends**: revenue trends, high-performing states/cities, and average order value
   - Included annotations and explanatory text to highlight key insights
+  - BI dashboard screenshots are displayed in the section below
 
 ## 7. BI Dashboards
 > **Note**: Download the file `Olist_Dashboard.twb` and open this in Tableau Public Desktop to view interactively
