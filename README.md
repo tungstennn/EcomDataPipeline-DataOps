@@ -1,4 +1,4 @@
-# End-to-End Data Engineering Project (Built with Terraform, Airflow, Redshift, and Tableau)
+# End-to-End Data Engineering Project (Python, SQL, Airflow, Redshift & Terraform)
 
 ## 1. Project Overview
 This project builds an **ELT pipeline** that loads raw sales transaction data from **AWS S3** into an **Amazon Redshift** data warehouse, where it is then transformed for **business intelligence (BI) and reporting**. The pipeline follows a **star schema model** and is orchestrated using **Apache Airflow (local setup)**.
