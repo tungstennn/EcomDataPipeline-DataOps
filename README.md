@@ -9,32 +9,8 @@ The project uses S3 as a data lake to store structured historical data from an O
 E-commerce businesses often store transactional data in **AWS S3**, but it remains **semi-structured and inefficient** for analysis. This project automates the daily batch **loading** of new data into **Amazon Redshift**, where it is then **transformed** into a clean, denormalized schema for sales, customer, and product analytics.
 
 ## 3. Flow Diagram
-> **Note**: This diagram is best viewed on desktop for proper rendering
 
-```mermaid
-graph TD
-    A["Raw Sales Transaction Data (Local)"] --> B["Upload to Amazon S3"]
-    B --> C["COPY into Redshift Staging Tables"]
-    C --> D["SQL-Based Transformations"]
-    D --> E["Create Star Schema (Fact & Dimension Tables)"]
-    E --> F["Single Customer View (SCV)"]
-    F --> G["BI Dashboard - Tableau"]
-
-    subgraph "Terraform-Provisioned Infra"
-        B
-        C
-        D
-        E
-    end
-
-    subgraph "ELT Orchestration"
-        H["Apache Airflow (Local) Scheduled to run daily"]
-    end
-
-    H --> C
-    H --> D
-    H --> E
-```
+![flow_diagram](images/flow_diagram.png)
 
 ## 4. Tech Stack
 
