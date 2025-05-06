@@ -10,7 +10,7 @@ E-commerce businesses often store transactional data in **AWS S3**, but it remai
 
 ## 3. Flow Diagram
 
-![flow_diagram](images/image.jpeg)
+![flow_diagram](images/image.png)
 
 ## 4. Tech Stack
 
