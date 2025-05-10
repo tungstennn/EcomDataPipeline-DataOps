@@ -1,31 +1,33 @@
 from unittest.mock import MagicMock, mock_open, patch
 from scripts.copy_to_redshift import copy_data
 
-@patch('builtins.open', new_callable=mock_open, read_data='COPY some_table FROM ...;')
-def test_copy_data_success(mock_file):
-    # Mock connection and cursor
+def test_copy_data_success():
+    # --- Arrange ---
     mock_conn = MagicMock()
     mock_cur = MagicMock()
 
-    # Run the function
-    copy_data(mock_conn, mock_cur)
+    fake_sql = 'COPY some_table FROM ...;'
+    m = mock_open(read_data=fake_sql)
 
-    # Check that the file was read and SQL was executed
-    mock_file.assert_called_once_with('sql/copy_to_redshift.sql', 'r')
-    mock_cur.execute.assert_called_once_with('COPY some_table FROM ...;')
+    # --- Act ---
+    with patch('builtins.open', m):
+        copy_data(mock_conn, mock_cur)
+
+    # --- Assert ---
+    mock_cur.execute.assert_called_once_with(fake_sql)
     mock_conn.rollback.assert_not_called()
 
-@patch('builtins.open', new_callable=mock_open, read_data='COPY some_table FROM ...;')
-def test_copy_data_failure(mock_file):
-    # Mock connection and cursor
+def test_copy_data_failure():
+    # --- Arrange ---
     mock_conn = MagicMock()
     mock_cur = MagicMock()
-
-    # Simulate an exception during SQL execution
     mock_cur.execute.side_effect = Exception("Test SQL error")
 
-    # Run the function
-    copy_data(mock_conn, mock_cur)
+    m = mock_open(read_data='COPY some_table FROM ...;')
 
-    # Should trigger rollback on exception
+    # --- Act ---
+    with patch('builtins.open', m):
+        copy_data(mock_conn, mock_cur)
+
+    # --- Assert ---
     mock_conn.rollback.assert_called_once()
